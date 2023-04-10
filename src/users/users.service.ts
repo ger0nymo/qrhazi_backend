@@ -28,6 +28,23 @@ export class UsersService {
     return resource;
   }
 
+  async getAll(sender: string): Promise<User[] | any> {
+    const senderUser = await this.findOneByName(sender);
+    console.log(senderUser);
+
+    if (!senderUser) {
+      return null;
+    }
+    if (!senderUser.isAdmin) {
+      return null;
+    }
+
+    const { resources } = await this.userContainer.items
+      .query<User>('SELECT * FROM c')
+      .fetchAll();
+    return resources;
+  }
+
   async updateCanEnter(
     id: string,
     toValue: boolean,
