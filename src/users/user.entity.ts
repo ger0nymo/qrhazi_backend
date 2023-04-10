@@ -5,5 +5,7 @@ export class User {
   id: string;
   username: string;
   password: string;
+  email: string;
   canEnter: boolean;
+  isAdmin: boolean;
 }
