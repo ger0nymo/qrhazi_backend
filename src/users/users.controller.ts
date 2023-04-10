@@ -25,11 +25,12 @@ export class UsersController {
   async updateUserCanEnter(@Request() req) {
     const id = req.body.id;
     const canEnter = req.body.canEnter;
-    const sender = req.body.sender; //todo remove this, unnecessary because of req.user will exist because of AuthGuard
+    const sender = req.user.username;
+
     const result = await this.usersService.updateCanEnter(id, canEnter, sender);
     if (!result) {
       return {
-        message: `Bad request. Sender user or user with id ${id} not found`,
+        message: `Bad request. User with id ${id} not found.`,
       };
     }
     return result;
@@ -42,7 +43,7 @@ export class UsersController {
 
     if (!result) {
       return {
-        message: `Bad request. Sender user not found or is not admin`,
+        message: `Bad request. Sender user not found or is not admin.`,
       };
     }
     return result;
