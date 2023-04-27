@@ -12,7 +12,18 @@ export class LoggingService {
     const log = new Log();
     log.id = uuidv4();
     log.username = username;
-    log.date = new Date().toISOString();
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const dateTimeString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+    log.date = dateTimeString;
+
     const { resource } = await this.logContainer.items.create(log);
     return resource;
   }
