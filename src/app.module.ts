@@ -5,6 +5,7 @@ import { AzureCosmosDbModule } from '@nestjs/azure-database';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { QrModule } from './qr/qr.module';
+import { LoggingModule } from './logging/logging.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { QrModule } from './qr/qr.module';
     AuthModule,
     UsersModule,
     QrModule,
+    LoggingModule,
   ],
 
   controllers: [AppController],

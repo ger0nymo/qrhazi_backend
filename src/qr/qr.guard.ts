@@ -25,6 +25,7 @@ export class QRGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException();
     }
+
     try {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
@@ -40,7 +41,8 @@ export class QRGuard implements CanActivate {
         throw new HttpException('Invalid QR code.', HttpStatus.BAD_REQUEST);
       }
       request.user = user;
-    } catch {
+    } catch (e) {
+      console.log('asdasdasdasd: ', e);
       throw new UnauthorizedException();
     }
     return true;
