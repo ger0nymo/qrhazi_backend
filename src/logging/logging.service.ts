@@ -27,4 +27,14 @@ export class LoggingService {
     const { resource } = await this.logContainer.items.create(log);
     return resource;
   }
+
+  async getAllLogs() {
+    try {
+      const { resources } = await this.logContainer.items.readAll().fetchAll();
+      return resources;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
 }
