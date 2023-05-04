@@ -45,6 +45,20 @@ export class UsersService {
     return resources;
   }
 
+  async updateIsIn(username: string, entryDirection: boolean) {
+    const query = `SELECT * FROM c WHERE c.username = '${username}'`;
+    const { resources } = await this.userContainer.items
+      .query<User>(query)
+      .fetchAll();
+    if (resources.length === 0) {
+      return null;
+    }
+    const user = resources[0];
+    const query = `UPDATE c SET c.isIn = ${entryDirection} WHERE c.id = '${user.id}'`;
+    const result = await this.userContainer.items.query<User>(query).fetchAll();
+    return result;
+  }
+
   async updateCanEnter(
     id: string,
     toValue: boolean,

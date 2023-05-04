@@ -11,10 +11,12 @@ export class QrService {
     private usersService: UsersService
   ) {}
 
-  async generateQR(name: string) {
-    const payload = { username: name, isQrCode: true };
+  async generateQR(name: string, direction: boolean) {
+    const payload = { username: name, isQrCode: true, direction: direction };
+    const qrCode = await this.jwtService.signAsync(payload);
+    console.log('qrCode: ', qrCode);
     return {
-      qrCode: await this.jwtService.signAsync(payload),
+      qrCode: qrCode,
     };
   }
 

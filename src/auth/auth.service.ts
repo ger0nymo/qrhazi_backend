@@ -44,6 +44,7 @@ export class AuthService {
       email: email,
       canEnter: false,
       isAdmin: false,
+      isIn: false,
     };
 
     const user = await this.usersService.create(newUser);

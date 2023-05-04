@@ -19,7 +19,10 @@ export class LoggingController {
   @UseGuards(QRGuard)
   @Post('create')
   async createLog(@Request() req) {
-    const result = await this.loggingService.createLog(req.user.username);
+    const result = await this.loggingService.createLog(
+      req.user.username,
+      req.direction
+    );
     if (!result) {
       throw new HttpException('Log creation failed.', HttpStatus.BAD_REQUEST);
     }

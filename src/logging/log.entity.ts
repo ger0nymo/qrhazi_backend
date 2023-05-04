@@ -5,4 +5,5 @@ export class Log {
   id: string;
   username: string;
   date: string;
+  in: boolean;
 }

@@ -35,11 +35,35 @@ export class QRGuard implements CanActivate {
         request.invalidQrCode = true;
       }
 
+      if (payload.hasOwnProperty('direction') === false) {
+        request.invalidQrCode = true;
+      }
+
       let user = await this.usersService.findOneByName(payload.username);
 
       if (!user) {
         throw new HttpException('Invalid QR code.', HttpStatus.BAD_REQUEST);
       }
+
+      if (payload.direction === false && user.isIn === false) {
+        throw new HttpException(
+          'You have to enter first.',
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
+      if (payload.direction === true && user.isIn === true) {
+        throw new HttpException(
+          'You have to exit first.',
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
+      const updateUserIsIn = await this.usersService.updateIsIn(
+        user.username,
+        payload.direction
+      );
+      request.direction = payload.direction;
       request.user = user;
     } catch (e) {
       console.log('asdasdasdasd: ', e);
