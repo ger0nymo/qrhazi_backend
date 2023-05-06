@@ -48,4 +48,20 @@ export class UsersController {
     }
     return result;
   }
+
+  @UseGuards(AuthGuard)
+  @Patch('update-is-in')
+  async updateUserIsIn(@Request() req) {
+    const username = req.user.username;
+
+    const newIsIn : boolean = req.query.entryDirection === 'true' ? true : false;
+
+    const result = await this.usersService.updateIsIn(username, newIsIn);
+    if (!result) {
+      return {
+        message: `Bad request. User with username ${username} not found.`,
+      };
+    }
+    return result;
+  }
 }

@@ -5,4 +5,5 @@ export interface IUserDto {
   email: string;
   canEnter: boolean;
   isAdmin: boolean;
+  isIn: boolean;
 }

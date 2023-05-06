@@ -18,7 +18,33 @@ export class QrController {
   @UseGuards(AuthGuard)
   @Get('generate')
   async generateQR(@Request() req) {
-    return await this.qrService.generateQR(req.user.username);
+    if (req.query.direction === undefined) {
+      throw new HttpException(
+        'Direction not specified.',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    if (req.user.isIn === true && req.query.direction === 'true') {
+      throw new HttpException(
+        'You have to exit first.',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    if (req.user.isIn === false && req.query.direction === 'false') {
+      throw new HttpException(
+        'You have to enter first.',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    const result = await this.qrService.generateQR(
+      req.user.username,
+      req.query.direction
+    );
+
+    return result;
   }
 
   @UseGuards(QRGuard)

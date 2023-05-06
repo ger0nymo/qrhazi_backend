@@ -8,4 +8,5 @@ export class User {
   email: string;
   canEnter: boolean;
   isAdmin: boolean;
+  isIn: boolean;
 }

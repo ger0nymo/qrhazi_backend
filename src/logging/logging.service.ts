@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class LoggingService {
   constructor(@InjectModel(Log) private readonly logContainer: Container) {}
 
-  async createLog(username: string) {
+  async createLog(username: string, inDirection: boolean) {
     const log = new Log();
     log.id = uuidv4();
     log.username = username;
@@ -23,6 +23,7 @@ export class LoggingService {
     const dateTimeString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
     log.date = dateTimeString;
+    log.in = inDirection;
 
     const { resource } = await this.logContainer.items.create(log);
     return resource;

@@ -45,6 +45,20 @@ export class UsersService {
     return resources;
   }
 
+  async updateIsIn(username: string, entryDirection: boolean) {
+    const queryUser = `SELECT * FROM c WHERE c.username = '${username}'`;
+    const { resources } = await this.userContainer.items
+      .query<User>(queryUser)
+      .fetchAll();
+    if (resources.length === 0) {
+      return null;
+    }
+    const user = resources[0];
+    user.isIn = entryDirection;
+    const { resource } = await this.userContainer.items.upsert(user);
+    return resource;
+  }
+
   async updateCanEnter(
     id: string,
     toValue: boolean,
