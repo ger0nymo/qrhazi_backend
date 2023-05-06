@@ -61,12 +61,11 @@ export class QRGuard implements CanActivate {
 
       const updateUserIsIn = await this.usersService.updateIsIn(
         user.username,
-        payload.direction
+        payload.direction === 'true'
       );
       request.direction = payload.direction;
       request.user = user;
     } catch (e) {
-      console.log('asdasdasdasd: ', e);
       throw new UnauthorizedException();
     }
     return true;

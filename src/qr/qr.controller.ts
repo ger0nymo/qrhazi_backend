@@ -25,9 +25,6 @@ export class QrController {
       );
     }
 
-    console.log(req.user.isIn);
-    console.log(req.query);
-
     if (req.user.isIn === true && req.query.direction === 'true') {
       throw new HttpException(
         'You have to exit first.',
@@ -42,10 +39,12 @@ export class QrController {
       );
     }
 
-    return await this.qrService.generateQR(
+    const result = await this.qrService.generateQR(
       req.user.username,
       req.query.direction
     );
+
+    return result;
   }
 
   @UseGuards(QRGuard)
